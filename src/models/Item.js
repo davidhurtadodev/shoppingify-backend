@@ -7,12 +7,10 @@ const ItemSchema = new mongoose.Schema({
     minlength: 4,
   },
   imageUrl: String,
-  category: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Category',
-    },
-  ],
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+  },
 });
 
 ItemSchema.set('toJSON', {

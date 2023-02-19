@@ -1,101 +1,38 @@
-const Item = require('../models/Item');
+// const Item = require('../models/Item');
+// const Category = require('../models/Category');
+const itemDB = require('../db/Item');
 
-const getAllItems = async () => {
-  const items = await Item.find({});
+const getAllElements = async () => {
+  const items = await itemDB.getAllElements();
   return items;
 };
-const getOneItem = () => {
-  return;
+
+const getOneElement = async (id) => {
+  const item = await itemDB(id);
+  return item;
 };
 
-const deleteItem = () => {
-  return;
+const deleteElement = async (id) => {
+  try {
+    await itemDB(id);
+    return;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-const updateItem = () => {};
+const updateElement = () => {};
 
-const createOneItem = async () => {
-  const { body } = req;
-
-  // Validate valid content
-  if (!body.name || !body.category) {
-    return res.status(400).json({
-      error: 'content missing',
-    });
-  }
-
-  //Validate repeatition
-  let isRepeated = await Item.findOne({
-    name: body.name.toLowerCase(),
-  });
-
-  if (isRepeated) {
-    return res.status(400).json({
-      error: 'repeated item',
-    });
-  }
-
+const createOneElement = async (body) => {
   // Validate if the category exist
-  let categoryInDb = await Category.findOne({
-    name: body.category.toLowerCase(),
-  });
-
-  if (!categoryInDb) {
-    const newCategory = new Category({
-      name: body.category.toLowerCase(),
-    });
-
-    const savedCategory = await newCategory.save();
-
-    const itemToCreate = {
-      name: body.name,
-      ...(body.note && { note: body.note }),
-      ...(body.imageUrl && { imageUrl: body.imageUrl }),
-      category: savedCategory.id,
-    };
-
-    const createdItem = new Item(itemToCreate);
-
-    const savedItem = await createdItem.save();
-
-    savedCategory.items = [...savedCategory.items, savedItem._id];
-
-    await savedCategory.save();
-
-    const populatedItem = await Item.findById(savedItem.id).populate(
-      'category'
-    );
-
-    return res.status(201).json(populatedItem);
-  } else {
-    const itemToCreate = {
-      name: body.name.toLowerCase(),
-      ...(body.note && { note: body.note }),
-      ...(body.imageUrl && { imageUrl: body.imageUrl }),
-      category: categoryInDb.id,
-    };
-
-    const createdItem = new Item(itemToCreate);
-
-    const savedItem = await createdItem.save();
-
-    categoryInDb.items = [...categoryInDb.items, savedItem._id];
-
-    await categoryInDb.save();
-
-    const populatedItem = await Item.findById(savedItem.id).populate(
-      'category'
-    );
-
-    return res.status(201).json(populatedItem);
-  }
+  const createdItem = await itemDB.createElement(body);
+  return createdItem;
 };
 
 module.exports = {
-  getAllItems,
-  getOneItem,
-  updateItem,
-  createOneItem,
-  updateItem,
-  deleteItem,
+  getAllElements,
+  getOneElement,
+  updateElement,
+  createOneElement,
+  deleteElement,
 };

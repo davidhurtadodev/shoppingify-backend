@@ -21,6 +21,6 @@ app.use(express.json());
 
 app.use('/api/v1/items', v1ItemRouter);
 
-app.listen(PORT, () => {
-  console.log(`API is listening on port ${PORT}`);
+app.listen(config.PORT, () => {
+  console.log(`API is listening on port ${config.PORT}`);
 });

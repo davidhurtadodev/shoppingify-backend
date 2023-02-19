@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/v1/items
+Content-Type: application/json
+
+{
+    "name": "Soda",
+    "category": "drinks"
+}

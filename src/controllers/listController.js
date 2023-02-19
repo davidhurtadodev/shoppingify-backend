@@ -2,14 +2,14 @@ const itemService = require('../services/itemService');
 const Item = require('../models/Item');
 
 const getAllElements = async (req, res) => {
-  const allElements = await itemService.getAllElements();
+  const allElements = await listtService.getAll();
   res.json(allElements);
 };
 
 const getOneElement = async (req, res) => {
   const { id } = req.body;
-  const item = await itemService.getOneElement(id);
-  res.status(200).json(item);
+  const element = await listService.getOne(id);
+  res.status(200).json(element);
 };
 
 const createNewElement = async (req, res) => {
@@ -33,13 +33,13 @@ const createNewElement = async (req, res) => {
     });
   }
 
-  const createdItem = await itemService.createOneElement(body);
+  const createdItem = await itemService.createOneItem(body);
   return res.status(200).json(createdItem);
 };
 
 const updateElement = async (req, res) => {
-  const updatedItem = await itemService.updateElement();
-  res.json(updatedItem);
+  const updatedElement = await listService.updateList();
+  res.json(updatedElement);
 };
 
 const deleteElement = (req, res) => {
