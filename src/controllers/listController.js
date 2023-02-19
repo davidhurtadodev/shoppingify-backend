@@ -1,8 +1,8 @@
-const itemService = require('../services/itemService');
-const Item = require('../models/Item');
+const listService = require('../services/listService');
+const List = require('../models/List');
 
 const getAllElements = async (req, res) => {
-  const allElements = await listtService.getAll();
+  const allElements = await listService.getAll();
   res.json(allElements);
 };
 
@@ -16,14 +16,20 @@ const createNewElement = async (req, res) => {
   const { body } = req;
 
   // Validate valid content
-  if (!body.name || !body.category) {
+  if (
+    !body.name ||
+    !body.category ||
+    !body.date ||
+    !body.items ||
+    !body.isCancelled
+  ) {
     return res.status(400).json({
       error: 'content missing',
     });
   }
 
   // Validate repetition
-  const isRepeated = await Item.findOne({
+  const isRepeated = await List.findOne({
     name: body.name.toLowerCase(),
   });
 
@@ -33,17 +39,18 @@ const createNewElement = async (req, res) => {
     });
   }
 
-  const createdItem = await itemService.createOneItem(body);
-  return res.status(200).json(createdItem);
+  const createdList = await listService.createOneElement(body);
+  return res.status(200).json(createdList);
 };
 
 const updateElement = async (req, res) => {
-  const updatedElement = await listService.updateList();
+  const { id, isCancelled } = req.body;
+  const updatedElement = await listService.updateList(id, isCancelled);
   res.json(updatedElement);
 };
 
 const deleteElement = (req, res) => {
-  itemService.deleteElement();
+  listService.deleteElement();
   res.status(204).end();
 };
 

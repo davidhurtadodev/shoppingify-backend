@@ -9,8 +9,8 @@ router.get('/:id', itemController.getOneElement);
 
 router.post('/', itemController.createNewElement);
 
-router.patch('/', itemController.updateElement);
+router.patch('/:id', itemController.updateElement);
 
-router.delete('/', itemController.deleteElement);
+router.delete('/:id', itemController.deleteElement);
 
 module.exports = router;

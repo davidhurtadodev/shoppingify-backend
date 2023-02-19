@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const ListSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3 },
-  status: { type: String, required: true },
+  isCancelled: { type: Boolean, required: true },
   date: { type: String, required: true },
   items: [
     {
