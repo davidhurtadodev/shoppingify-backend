@@ -23,4 +23,4 @@ ListSchema.set('toJSON', {
   },
 });
 
-module.exports = mongoose.model('Category', ListSchema);
+module.exports = mongoose.model('List', ListSchema);

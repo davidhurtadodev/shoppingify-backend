@@ -8,13 +8,13 @@ const getAllElements = async () => {
 };
 
 const getOneElement = async (id) => {
-  const item = await itemDB(id);
+  const item = await itemDB.getOneElement(id);
   return item;
 };
 
 const deleteElement = async (id) => {
   try {
-    await itemDB(id);
+    await itemDB.deleteElement(id);
     return;
   } catch (error) {
     console.error(error);

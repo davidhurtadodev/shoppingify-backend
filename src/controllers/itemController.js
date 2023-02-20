@@ -7,7 +7,7 @@ const getAllElements = async (req, res) => {
 };
 
 const getOneElement = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const item = await itemService.getOneElement(id);
   res.status(200).json(item);
 };
@@ -42,9 +42,13 @@ const updateElement = async (req, res) => {
   res.json(updatedItem);
 };
 
-const deleteElement = (req, res) => {
-  itemService.deleteElement();
-  res.status(204).end();
+const deleteElement = async (req, res) => {
+  const { id } = req.params;
+  if (!id) {
+    return res.status(400).end();
+  }
+  await itemService.deleteElement(id);
+  return res.status(204).end();
 };
 
 module.exports = {
