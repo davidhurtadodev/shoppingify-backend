@@ -23,7 +23,7 @@ const updateElement = () => {};
 
 const createElement = async (body) => {
   // Validate if the category exist
-  let categoryInDb = await Category.findOne({
+  const categoryInDb = await Category.findOne({
     name: body.category.toLowerCase(),
   });
 
@@ -54,28 +54,25 @@ const createElement = async (body) => {
     );
 
     return populatedItem;
-  } else {
-    const itemToCreate = {
-      name: body.name.toLowerCase(),
-      ...(body.note && { note: body.note }),
-      ...(body.imageUrl && { imageUrl: body.imageUrl }),
-      category: categoryInDb.id,
-    };
-
-    const createdItem = new Item(itemToCreate);
-
-    const savedItem = await createdItem.save();
-
-    categoryInDb.items = [...categoryInDb.items, savedItem._id];
-
-    await categoryInDb.save();
-
-    const populatedItem = await Item.findById(savedItem.id).populate(
-      'category'
-    );
-
-    return populatedItem;
   }
+  const itemToCreate = {
+    name: body.name.toLowerCase(),
+    ...(body.note && { note: body.note }),
+    ...(body.imageUrl && { imageUrl: body.imageUrl }),
+    category: categoryInDb.id,
+  };
+
+  const createdItem = new Item(itemToCreate);
+
+  const savedItem = await createdItem.save();
+
+  categoryInDb.items = [...categoryInDb.items, savedItem._id];
+
+  await categoryInDb.save();
+
+  const populatedItem = await Item.findById(savedItem.id).populate('category');
+
+  return populatedItem;
 };
 
 module.exports = {

@@ -3,30 +3,45 @@
 const itemDB = require('../db/Item');
 
 const getAllElements = async () => {
-  const items = await itemDB.getAllElements();
-  return items;
+  try {
+    const items = await itemDB.getAllElements();
+    return items;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 const getOneElement = async (id) => {
-  const item = await itemDB.getOneElement(id);
-  return item;
+  try {
+    const item = await itemDB.getOneElement(id);
+    return item;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 const deleteElement = async (id) => {
   try {
     await itemDB.deleteElement(id);
     return;
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
 const updateElement = () => {};
 
 const createOneElement = async (body) => {
-  // Validate if the category exist
-  const createdItem = await itemDB.createElement(body);
-  return createdItem;
+  try {
+    const createdItem = await itemDB.createElement(body);
+    return createdItem;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 module.exports = {

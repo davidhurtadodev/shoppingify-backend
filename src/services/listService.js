@@ -3,13 +3,23 @@
 const listDB = require('../db/Item');
 
 const getAllElements = async () => {
-  const lists = await listDB.getAllElements();
-  return lists;
+  try {
+    const lists = await listDB.getAllElements();
+    return lists;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 const getOneElement = async (id) => {
-  const list = await listDB.getOneElement(id);
-  return list;
+  try {
+    const list = await listDB.getOneElement(id);
+    return list;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 const deleteElement = async (id) => {
@@ -24,9 +34,13 @@ const deleteElement = async (id) => {
 const updateElement = () => {};
 
 const createOneElement = async (body) => {
-  // Validate if the category exist
-  const createdList = await listDB.createOneElement(body);
-  return createdList;
+  try {
+    const createdList = await listDB.createOneElement(body);
+    return createdList;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
 };
 
 module.exports = {

@@ -1,57 +1,97 @@
 const listService = require('../services/listService');
 const List = require('../models/List');
 
-const getAllElements = async (req, res) => {
-  const allElements = await listService.getAll();
-  res.json(allElements);
-};
-
-const getOneElement = async (req, res) => {
-  const { id } = req.body;
-  const element = await listService.getOne(id);
-  res.status(200).json(element);
-};
-
-const createNewElement = async (req, res) => {
-  const { body } = req;
-
-  // Validate valid content
-  if (
-    !body.name ||
-    !body.category ||
-    !body.date ||
-    !body.items ||
-    !body.isCancelled
-  ) {
-    return res.status(400).json({
-      error: 'content missing',
-    });
+const getAllElements = async (req, res, next) => {
+  try {
+    const allElements = await listService.getAll();
+    return res.json(allElements);
+  } catch (err) {
+    return next(err);
   }
+};
 
-  // Validate repetition
-  const isRepeated = await List.findOne({
-    name: body.name.toLowerCase(),
-  });
-
-  if (isRepeated) {
-    return res.status(400).json({
-      error: 'repeated item',
-    });
+const getOneElement = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      res.status(400).json({
+        error: 'missing id',
+      });
+    }
+    const element = await listService.getOne(id);
+    res.status(200).json(element);
+  } catch (err) {
+    next(err);
   }
-
-  const createdList = await listService.createOneElement(body);
-  return res.status(200).json(createdList);
 };
 
-const updateElement = async (req, res) => {
-  const { id, isCancelled } = req.body;
-  const updatedElement = await listService.updateList(id, isCancelled);
-  res.json(updatedElement);
+const createNewElement = async (req, res, next) => {
+  try {
+    const { body } = req;
+
+    // Validate valid content
+    if (
+      !body.name ||
+      !body.category ||
+      !body.date ||
+      !body.items ||
+      !body.isCancelled
+    ) {
+      return res.status(400).json({
+        error: 'content missing',
+      });
+    }
+
+    // Validate repetition
+    const isRepeated = await List.findOne({
+      name: body.name.toLowerCase(),
+    });
+
+    if (isRepeated) {
+      return res.status(400).json({
+        error: 'repeated item',
+      });
+    }
+
+    const createdList = await listService.createOneElement(body);
+    return res.status(200).json(createdList);
+  } catch (err) {
+    return next(err);
+  }
 };
 
-const deleteElement = (req, res) => {
-  listService.deleteElement();
-  res.status(204).end();
+const updateElement = async (req, res, next) => {
+  try {
+    const { isCancelled } = req.body;
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        error: 'missing id',
+      });
+    }
+
+    const updatedElement = await listService.updateList(id, isCancelled);
+    return res.status(200).json(updatedElement);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+const deleteElement = (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        error: 'missing id',
+      });
+    }
+    listService.deleteElement(id);
+    return res.status(204).end();
+  } catch (err) {
+    return next(err);
+  }
 };
 
 module.exports = {
