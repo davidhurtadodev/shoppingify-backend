@@ -3,23 +3,9 @@ const supertest = require('supertest');
 const app = require('../index');
 const Item = require('../models/Item');
 const Category = require('../models/Category');
+const testHelper = require('../lib/testHelper');
 
 const api = supertest(app);
-
-const initialItems = [
-  {
-    name: 'Orange juice',
-    category: 'Drinks',
-  },
-  {
-    name: 'Coca cola',
-    category: 'drinks',
-  },
-  {
-    name: 'Rice (1kg)',
-    category: 'Cereals',
-  },
-];
 
 beforeEach(async () => {
   await Item.deleteMany({});
@@ -28,7 +14,7 @@ beforeEach(async () => {
 
 describe('when there is one', () => {
   beforeEach(async () => {
-    await api.post('/api/v1/items').send(initialItems[0]);
+    await api.post('/api/v1/items').send(testHelper.initialItems[0]);
   });
 
   it('db has one item', async () => {
@@ -39,15 +25,15 @@ describe('when there is one', () => {
 
     expect(response.body).toHaveLength(1);
     const itemName = response.body[0].name;
-    expect(itemName).toBe(initialItems[0].name.toLowerCase());
+    expect(itemName).toBe(testHelper.initialItems[0].name.toLowerCase());
   });
   it('post another item', async () => {
-    await api.post('/api/v1/items').send(initialItems[1]);
+    await api.post('/api/v1/items').send(testHelper.initialItems[1]);
     const response = await api.get('/api/v1/items');
 
     expect(response.body).toHaveLength(2);
     expect(response.body[1].name).toBe(
-      initialItems[1].name.toLocaleLowerCase()
+      testHelper.initialItems[1].name.toLocaleLowerCase()
     );
   });
   it('responds an error with wrong request', async () => {
@@ -68,14 +54,16 @@ describe('when there is one', () => {
 
 describe('with more than two items', () => {
   beforeEach(async () => {
-    await api.post('/api/v1/items').send(initialItems[0]);
-    await api.post('/api/v1/items').send(initialItems[1]);
-    await api.post('/api/v1/items').send(initialItems[2]);
+    await testHelper.postAllItems(testHelper.initialItems, api);
+
+    // await api.post('/api/v1/items').send(initialItems[0]);
+    // await api.post('/api/v1/items').send(initialItems[1]);
+    // await api.post('/api/v1/items').send(initialItems[2]);
   });
   it('databases items has the length of the items', async () => {
     const { body } = await api.get('/api/v1/items');
 
-    expect(body).toHaveLength(initialItems.length);
+    expect(body).toHaveLength(testHelper.initialItems.length);
   });
   it('only has correct number of categories', async () => {
     const response = await Category.find({});

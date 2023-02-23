@@ -3,7 +3,7 @@ const List = require('../models/List');
 
 const getAllElements = async (req, res, next) => {
   try {
-    const allElements = await listService.getAll();
+    const allElements = await listService.getAllElements();
     return res.json(allElements);
   } catch (err) {
     return next(err);
@@ -32,10 +32,9 @@ const createNewElement = async (req, res, next) => {
     // Validate valid content
     if (
       !body.name ||
-      !body.category ||
+      typeof body.isCancelled !== 'boolean' ||
       !body.date ||
-      !body.items ||
-      !body.isCancelled
+      body.items.length < 1
     ) {
       return res.status(400).json({
         error: 'content missing',

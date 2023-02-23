@@ -1,6 +1,6 @@
 // const Item = require('../models/Item');
 // const Category = require('../models/Category');
-const listDB = require('../db/Item');
+const listDB = require('../db/List');
 
 const getAllElements = async () => {
   try {
@@ -35,7 +35,7 @@ const updateElement = () => {};
 
 const createOneElement = async (body) => {
   try {
-    const createdList = await listDB.createOneElement(body);
+    const createdList = await listDB.createElement(body);
     return createdList;
   } catch (err) {
     console.error(err);

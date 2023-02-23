@@ -1,10 +1,8 @@
-const Item = require('../models/Item');
-const Category = require('../models/Category');
 const List = require('../models/List');
 
 const getAllElements = async () => {
-  const items = await List.find({}).populate('items');
-  return items;
+  const lists = await List.find({}).populate('items');
+  return lists;
 };
 const getOneElement = async (id) => {
   const list = await List.findById(id).populate('items');
@@ -30,16 +28,18 @@ const updateElement = async (id, isCancelled) => {
 };
 
 const createElement = async (body) => {
+  const { name, isCancelled, items, date } = body;
   // Validate if the list exist
   const listInDb = await List.findOne({
-    name: body.category.toLowerCase(),
+    name: name.toLowerCase(),
   });
 
   if (!listInDb) {
     const listToCreate = {
-      name: body.name.toLowerCase(),
-      status: body.status,
-      items: body.items,
+      name: name.toLowerCase(),
+      isCancelled,
+      items,
+      date,
     };
 
     const createdList = new List(listToCreate);

@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/v1/lists
+Content-Type: application/json
+
+{
+     "name": "Test success",
+      "items": ["63f6300b290aa7e4c28955b2"],
+      "isCancelled": true,
+      "date": "hou"
+}
