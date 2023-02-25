@@ -6,6 +6,7 @@ const middlewares = require('./lib/middlewares');
 
 const v1ItemRouter = require('./v1/routes/itemRoute');
 const v1ListRouter = require('./v1/routes/listRoute');
+const v1CategoryRouter = require('./v1/routes/categoryRoute');
 
 const v1TestingRouter = require('./v1/routes/testingRoute');
 
@@ -25,6 +26,7 @@ app.use(express.json());
 
 app.use('/api/v1/items', v1ItemRouter);
 app.use('/api/v1/lists', v1ListRouter);
+app.use('/api/v1/categories', v1CategoryRouter);
 
 app.use('/api/v1/testing', v1TestingRouter);
 

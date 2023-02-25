@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const supertest = require('supertest');
 const app = require('../index');
 const Item = require('../models/Item');
