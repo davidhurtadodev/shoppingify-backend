@@ -35,7 +35,16 @@ const updateElement = () => {};
 
 const createOneElement = async (body) => {
   try {
-    const createdList = await listDB.createElement(body);
+    const mappedItems = body.items.map((item) => ({
+      item: item.item.id,
+      quantity: item.quantity,
+    }));
+
+    const { items, ...listToDb } = body;
+    listToDb.items = mappedItems;
+    // console.log({ before: listToDb.items });
+    const createdList = await listDB.createElement(listToDb);
+    // console.log({ after: createdList });
     return createdList;
   } catch (err) {
     console.error(err);

@@ -5,13 +5,33 @@ const mongoose = require('mongoose');
 const ListSchema = new mongoose.Schema({
   name: { type: String, required: true, minlength: 3 },
   isCancelled: { type: Boolean, required: true },
-  date: { type: String, required: true },
+  date: { type: Date, required: true },
   items: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'Item',
-    },
+    new mongoose.Schema(
+      {
+        item: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: 'Item',
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+      { _id: false }
+    ),
+    //  }, { _id: false }) {
+    //     item: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       required: true,
+    //       ref: 'Item',
+    //     },
+    //     quantity: {
+    //       type: Number,
+    //       required: true,
+    //     },
+    //   },
   ],
 });
 

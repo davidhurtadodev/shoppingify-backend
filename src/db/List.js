@@ -1,7 +1,15 @@
 const List = require('../models/List');
+const Item = require('../models/Item');
+const Category = require('../models/Category');
 
 const getAllElements = async () => {
-  const lists = await List.find({}).populate('items');
+  const lists = await List.find({}).populate({
+    path: 'items.item',
+    populate: {
+      path: 'category',
+    },
+  });
+
   return lists;
 };
 const getOneElement = async (id) => {
@@ -46,7 +54,10 @@ const createElement = async (body) => {
 
     await createdList.save();
 
-    const populatedList = await createdList.populate('items');
+    const populatedList = await createdList.populate({
+      path: 'items.item',
+      model: Item,
+    });
 
     return populatedList;
   }

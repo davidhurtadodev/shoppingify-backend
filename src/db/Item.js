@@ -49,9 +49,16 @@ const createElement = async (body) => {
 
     await savedCategory.save();
 
-    const populatedItem = await Item.findById(savedItem.id).populate(
-      'category'
-    );
+    const populatedItem = await Item.findById(savedItem.id)
+      .populate('category')
+      .populate({
+        path: 'category',
+        model: 'Category',
+        populate: {
+          path: 'items',
+          model: 'Item',
+        },
+      });
 
     return populatedItem;
   }
@@ -70,7 +77,16 @@ const createElement = async (body) => {
 
   await categoryInDb.save();
 
-  const populatedItem = await Item.findById(savedItem.id).populate('category');
+  const populatedItem = await Item.findById(savedItem.id)
+    .populate('category')
+    .populate({
+      path: 'category',
+      model: 'Category',
+      populate: {
+        path: 'items',
+        model: 'Item',
+      },
+    });
 
   return populatedItem;
 };

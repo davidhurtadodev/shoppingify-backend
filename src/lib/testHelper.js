@@ -15,6 +15,18 @@ const initialItems = [
     name: 'chicken',
     category: 'meat',
   },
+  {
+    name: 'Water 1L',
+    category: 'Drinks',
+  },
+  {
+    name: 'Cheese 1Kg',
+    category: 'meat',
+  },
+  {
+    name: 'Bread',
+    category: 'Cereals',
+  },
 ];
 const postAllItems = async (items, api) => {
   // eslint-disable-next-line no-restricted-syntax

@@ -55,10 +55,6 @@ describe('when there is one', () => {
 describe('with more than two items', () => {
   beforeEach(async () => {
     await testHelper.postAllItems(testHelper.initialItems, api);
-
-    // await api.post('/api/v1/items').send(initialItems[0]);
-    // await api.post('/api/v1/items').send(initialItems[1]);
-    // await api.post('/api/v1/items').send(initialItems[2]);
   });
   it('databases items has the length of the items', async () => {
     const { body } = await api.get('/api/v1/items');
@@ -67,7 +63,7 @@ describe('with more than two items', () => {
   });
   it('only has correct number of categories', async () => {
     const response = await Category.find({});
-    expect(response).toHaveLength(2);
+    expect(response).toHaveLength(3);
     const mappedNames = response.map((object) => object.name);
     expect(mappedNames).toContain('drinks');
     expect(mappedNames).toContain('cereals');

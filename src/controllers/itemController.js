@@ -4,7 +4,7 @@ const Item = require('../models/Item');
 const getAllElements = async (req, res, next) => {
   try {
     const allElements = await itemService.getAllElements();
-    res.json(allElements);
+    return res.json(allElements);
   } catch (err) {
     next(err);
   }

@@ -2,8 +2,39 @@ POST http://localhost:3003/api/v1/lists
 Content-Type: application/json
 
 {
-     "name": "Test success",
-      "items": ["63f6300b290aa7e4c28955b2"],
-      "isCancelled": true,
-      "date": "hou"
+     "name": "Test list 1",
+      "items": [
+            {
+            "item":
+                  {
+                  "name": "orange juice",
+                  "category": {
+                        "name": "drinks",
+                        "items": [
+                        "6400b9f8b8420fc3488a00a9",
+                        "6400b9f9b8420fc3488a00b1"
+                        ],
+                        "id": "6400b9f8b8420fc3488a00a7"
+                  },
+                  "id": "6400b9f8b8420fc3488a00a9"
+                  }, 
+      "quantity": "1"},
+      {
+      "item": {
+            "name": "coca cola",
+            "category": {
+                  "name": "drinks",
+                  "items": [
+                        "6400b9f8b8420fc3488a00a9",
+                        "6400b9f9b8420fc3488a00b1"
+                  ],
+                  "id": "6400b9f8b8420fc3488a00a7"
+            },
+            "id": "6400b9f9b8420fc3488a00b1"
+            },
+      "quantity": 2
+      }
+      ],
+      "isCancelled": false,
+      "date": "13-03-2023"
 }
