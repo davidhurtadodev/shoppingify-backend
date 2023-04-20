@@ -12,7 +12,11 @@ const initialItems = [
     category: 'Cereals',
   },
   {
-    name: 'chicken',
+    name: 'chicken breast 1kg',
+    category: 'meat',
+  },
+  {
+    name: 'Tuna 1kg',
     category: 'meat',
   },
   {
@@ -21,11 +25,43 @@ const initialItems = [
   },
   {
     name: 'Cheese 1Kg',
-    category: 'meat',
+    category: 'Dairy',
+  },
+  {
+    name: 'Yogur',
+    category: 'Dairy',
   },
   {
     name: 'Bread',
     category: 'Cereals',
+  },
+  {
+    name: 'Pasta 1kg',
+    category: 'Cereals',
+  },
+  {
+    name: 'Beer',
+    category: 'Drinks',
+  },
+  {
+    name: 'Tomato 1kg',
+    category: 'vegetables',
+  },
+  {
+    name: 'Onions 1kg',
+    category: 'vegetables',
+  },
+  {
+    name: 'Spinach (bag)',
+    category: 'vegetables',
+  },
+  {
+    name: 'Banana (1kg)',
+    category: 'fruits',
+  },
+  {
+    name: 'Strawberry (1kg)',
+    category: 'fruits',
   },
 ];
 const postAllItems = async (items, api) => {
