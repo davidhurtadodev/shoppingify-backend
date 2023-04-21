@@ -1,14 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const config = require('./lib/config');
-const middlewares = require('./lib/middlewares');
+const config = require('./src/lib/config');
+const middlewares = require('./src/lib/middlewares');
 
-const v1ItemRouter = require('./v1/routes/itemRoute');
-const v1ListRouter = require('./v1/routes/listRoute');
-const v1CategoryRouter = require('./v1/routes/categoryRoute');
+const v1ItemRouter = require('./src/v1/routes/itemRoute');
+const v1ListRouter = require('./src/v1/routes/listRoute');
+const v1CategoryRouter = require('./src/v1/routes/categoryRoute');
 
-const v1TestingRouter = require('./v1/routes/testingRoute');
+const v1TestingRouter = require('./src/v1/routes/testingRoute');
 
 const app = express();
 

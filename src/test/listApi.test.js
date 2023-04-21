@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../index');
+const app = require('../../index');
 const Item = require('../models/Item');
 const Category = require('../models/Category');
 const List = require('../models/List');
